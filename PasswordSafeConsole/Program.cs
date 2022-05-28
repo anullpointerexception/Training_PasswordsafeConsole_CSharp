@@ -37,7 +37,7 @@ namespace PasswordSafeConsole
                         unlocked = masterRepository.MasterPasswordIsEqualTo(masterPw);
                         if (unlocked) 
                         {
-                            passwordSafeEngine = new PasswordSafeEngine("./passwords.pw", new CipherFacility(masterPw));
+                            passwordSafeEngine = new PasswordSafeEngine(new CipherFacility(masterPw), new MultiFileDataSourceLayer("./passwords.pw"));
                             Console.WriteLine("unlocked");
                         } else
                         {

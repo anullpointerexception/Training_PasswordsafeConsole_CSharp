@@ -1,0 +1,8 @@
+﻿The datasource layer should be extracted from the PasswordSafeEngine:
+1.) (PasswordSafeEngine) Split up proper methods related to data storage (file IOs) (refactoring tool: extract method)
+2.) (PasswordSafeEngine) Create class MultiFileDataSourceLayer (refactoring tool: Create Class in new file)
+3.) (PasswordSafeEngine, MultiFileDataSourceLayer)move one method from PasswordSafeEngine to MultiFileDataSourceLayer.
+4.) (MultiFileDataSourceLayer) Create ctor of MultiFileDataSourceLayer with path argument.
+5.) (PasswordSafeEngine, MultiFileDataSourceLayer) Move other methods.
+6.) (MultiFileDataSourceLayer) Extract proper interface IDataSourceLayer (refactoring tool: extract interface)
+7.) Use the interface everywhere and inject it into PasswordSafeEngine via ctor.

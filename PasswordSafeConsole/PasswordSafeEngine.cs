@@ -1,54 +1,38 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace PasswordSafeConsole
 {
     internal class PasswordSafeEngine
     {
-        private string path;
         private CipherFacility cipherFacility;
+        private IDataSourceLayer multiFileDataSourceLayer;
 
-        public PasswordSafeEngine(string path, CipherFacility cipherFacility)
+        public PasswordSafeEngine(CipherFacility cipherFacility, IDataSourceLayer dataSourceLayer)
         {
-            this.path = path;
             this.cipherFacility = cipherFacility;
+            this.multiFileDataSourceLayer = dataSourceLayer;
         }
 
         internal IEnumerable<string> GetStoredPasswords()
-        { 
-            if (!Directory.Exists(this.path))
-            {
-                return Enumerable.Empty<string>();
-            }
-
-            return Directory.GetFiles(this.path).ToList().
-                Select(f => Path.GetFileName(f)).
-                Where(f => f.EndsWith(".pw")).
-                Select(f => f.Split(".")[0]);
+        {
+            return this.multiFileDataSourceLayer.GetAllNamesOfPasswords();
         }
 
         internal string GetPassword(string passwordName)
         {
-            byte[] password = File.ReadAllBytes(Path.Combine(this.path, $"{passwordName}.pw"));
+            byte[] password = this.multiFileDataSourceLayer.GetPasswordCipher(passwordName);
             return this.cipherFacility.Decrypt(password);
         }
 
         internal void AddNewPassword(PasswordInfo passwordInfo)
         {
-            if (!Directory.Exists(this.path))
-            {
-                Directory.CreateDirectory(this.path);
-            }
-
-            File.WriteAllBytes(
-                Path.Combine(this.path, $"{passwordInfo.PasswordName}.pw"),
-                this.cipherFacility.Encrypt(passwordInfo.Password));
+            byte[] cipher = this.cipherFacility.Encrypt(passwordInfo.Password);
+            this.multiFileDataSourceLayer.StorePassword(passwordInfo, cipher);
         }
 
         internal void DeletePassword(string passwordName)
         {
-            File.Delete(Path.Combine(this.path, $"{passwordName}.pw"));
+            this.multiFileDataSourceLayer.DeletePasswordData(passwordName);
         }
     }
 }
