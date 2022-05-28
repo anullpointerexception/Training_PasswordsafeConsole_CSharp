@@ -35,11 +35,13 @@ namespace PasswordSafeConsole
                         Console.WriteLine("Enter master password");
                         String masterPw = Console.ReadLine();
                         unlocked = masterRepository.MasterPasswordIsEqualTo(masterPw);
-                        if (unlocked) 
-                        {
-                            passwordSafeEngine = new PasswordSafeEngine("./passwords.pw", new CipherFacility(masterPw));
-                            Console.WriteLine("unlocked");
-                        } else
+                        if (unlocked)
+                            {
+                                const string passwordFilePath = "./passwords.pw";
+                                passwordSafeEngine = PasswordSafeEngingeFactoryMethod.CreatePasswordSafeEngine(masterPw, passwordFilePath);
+                                Console.WriteLine("unlocked");
+                            }
+                            else
                         {
                             Console.WriteLine("master password did not match ! Failed to unlock.");
                         }
