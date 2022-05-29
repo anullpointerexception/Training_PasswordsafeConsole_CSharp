@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordSafeConsole.Jokes;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace PasswordSafeConsole
             bool unlocked = false;
             while (!abort) 
             {
-                Console.WriteLine("Enter master (1), show all (2), show single (3), add (4), delete(5), set new master (6), Abort (0)");
+                Console.WriteLine("Enter master (1), show all (2), show single (3), add (4), delete(5), set new master (6), get joke (7), Abort (0)");
                 int input = 0;
                 if (!int.TryParse(Console.ReadLine(), out input))
                 {
@@ -114,6 +115,12 @@ namespace PasswordSafeConsole
                         }
                         break;
                     }
+                    case 7:
+                        {
+                            string jokeOnly = JokeLoader.RequestJoke();
+                            Console.WriteLine(jokeOnly);
+                            break;
+                        }
                     default:
                     {
                         Console.WriteLine("Invalid input");
@@ -125,5 +132,7 @@ namespace PasswordSafeConsole
 
             Console.WriteLine("Good bye !");
         }
+
+       
     }
 }

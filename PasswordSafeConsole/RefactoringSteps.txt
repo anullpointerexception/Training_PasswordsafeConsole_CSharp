@@ -1,0 +1,7 @@
+﻿In this refactoring we want to integrate the chuck norris API (https://api.chucknorris.io/jokes/random) to provide a joke
+on a users request:
+1.) (Program) Create selection case 7 "Get joke" and extend menu options properly
+2.) (Program) Write code for http request directly in case block.
+3.) (Program) Extract method from the case block (refactoring tool: extract method).
+4.) (Program) Create class JokeLoader in namespace Jokes.
+5.) (JokeLoader) Refactor class properly.
