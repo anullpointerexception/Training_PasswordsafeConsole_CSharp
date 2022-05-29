@@ -6,7 +6,10 @@ namespace PasswordSafeConsole
 {
     public class Program
     {
-        private static MasterPasswordRepository masterRepository = new MasterPasswordRepository("./master.pw");
+        private static IMasterPasswordRepository masterRepository = 
+            new MasterPasswordSecurityRepositoryProxy(
+                new MasterPasswordRepository("./master.pw"));
+
         private static PasswordSafeEngine passwordSafeEngine = null;
 
         public static void Main(String[] args)

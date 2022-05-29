@@ -1,0 +1,8 @@
+﻿In this section we create a proxy for the MasterPasswordRepository preventing brute force attacks on the master password.
+Once the user has entered a wrong password three times, it will be blocked for 1 Minute.
+1.) (MasterPasswordRepositorySecurityProxy) extract interface IMasterPasswordRepository from MasterPasswordRepositorySecurityProxy (refactoring too: extract interface)
+2.) (Program) Change type of field for MasterPasswordRepository to the interface IMasterPasswordRepository.
+3.) (Program) Apply proxy in field initializer for the MasterPasswordRepository
+4.) (Program) create class MasterPasswordRepositorySecurityProxy (refactoring tool: create class).
+5.) (Program) create ctor for class MasterPasswordRepositorySecurityProxy accepting the interface IMasterPasswordRepository as parameter.
+6.) (MasterPasswordRepositorySecurityProxy) Implement logic in MasterPasswordRepositorySecurityProxy.

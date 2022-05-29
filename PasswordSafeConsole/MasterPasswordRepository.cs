@@ -2,7 +2,7 @@
 
 namespace PasswordSafeConsole
 {
-    internal class MasterPasswordRepository
+    internal class MasterPasswordRepository : IMasterPasswordRepository
     {
         private string masterPasswordPath;
 
@@ -11,13 +11,13 @@ namespace PasswordSafeConsole
             this.masterPasswordPath = masterPasswordPath;
         }
 
-        internal bool MasterPasswordIsEqualTo(string masterPwToCompare)
+        public bool MasterPasswordIsEqualTo(string masterPwToCompare)
         {
-            return File.Exists(this.masterPasswordPath) && 
+            return File.Exists(this.masterPasswordPath) &&
                 masterPwToCompare == File.ReadAllText(this.masterPasswordPath);
         }
 
-        internal void SetMasterPasswordPlain(string masterPw)
+        public void SetMasterPasswordPlain(string masterPw)
         {
             File.WriteAllText(this.masterPasswordPath, masterPw);
         }
