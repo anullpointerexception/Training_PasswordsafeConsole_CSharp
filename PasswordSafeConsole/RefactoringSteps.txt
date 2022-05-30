@@ -1,0 +1,8 @@
+﻿Under usage of the command pattern we will open the tool for plugins:
+1.) (Program) Create menuitem 7 for executing plugins.
+2.) (Program) Create class SuggestPasswordPlugin (refactoring tool: Create class).
+3.) (Program) Create method execute (refactoring tool: create method).
+4.) (Program) Implement Method for suggesting password.
+5.) (SuggestPasswordPlugin) Extract abstract base class (refactoring tool: extract base class).
+6.) (Program) Make usage of abstract Plugin base.
+7.) (Program) Create class for TestPasswordStrength (refactoring tool: create class).

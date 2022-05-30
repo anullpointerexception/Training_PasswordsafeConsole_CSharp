@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordSafeConsole.Plugins;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace PasswordSafeConsole
             bool unlocked = false;
             while (!abort) 
             {
-                Console.WriteLine("Enter master (1), show all (2), show single (3), add (4), delete(5), set new master (6), Abort (0)");
+                Console.WriteLine("Enter master (1), show all (2), show single (3), add (4), delete(5), set new master (6), execute plugin (7), Abort (0)");
                 int input = 0;
                 if (!int.TryParse(Console.ReadLine(), out input))
                 {
@@ -114,6 +115,11 @@ namespace PasswordSafeConsole
                         }
                         break;
                     }
+                    case 7:
+                        {
+                            SelectAndExecutePlugin();
+                            break;
+                        }
                     default:
                     {
                         Console.WriteLine("Invalid input");
@@ -124,6 +130,34 @@ namespace PasswordSafeConsole
             }
 
             Console.WriteLine("Good bye !");
+        }
+
+        private static void SelectAndExecutePlugin()
+        {
+            Console.WriteLine("Suggest password (1), Test passowrd strength (2), Exit (0)");
+            int plugin = 0;
+            if (!int.TryParse(Console.ReadLine(), out plugin))
+            {
+                plugin = -1;
+            }
+            PluginBase selectedPlugin = null;
+            switch (plugin)
+            {
+                case 1:
+                {
+                    selectedPlugin = new SuggestRandomPasswordPlugin();
+                    break;
+                }
+                case 2:
+                {
+                        selectedPlugin = new TestPasswordStrengthPlugin();
+                    break;
+                }
+            }
+            if (selectedPlugin != null)
+            {
+                selectedPlugin.Execute();
+            }
         }
     }
 }
