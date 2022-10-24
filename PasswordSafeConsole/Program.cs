@@ -6,7 +6,7 @@ namespace PasswordSafeConsole
 {
     public class Program
     {
-        private static MasterPasswordRepository masterRepository = new MasterPasswordRepository("./master.pw");
+        private static MasterPasswordRepository masterRepository = MasterPasswordRepository.Instance();
         private static PasswordSafeEngine passwordSafeEngine = null;
 
         public static void Main(String[] args)
@@ -34,6 +34,7 @@ namespace PasswordSafeConsole
                      {
                         Console.WriteLine("Enter master password");
                         String masterPw = Console.ReadLine();
+
                         unlocked = masterRepository.MasterPasswordIsEqualTo(masterPw);
                         if (unlocked) 
                         {
@@ -104,8 +105,20 @@ namespace PasswordSafeConsole
                     {
                         unlocked = false;
                         passwordSafeEngine = null;
-                        Console.WriteLine("Enter new master password ! (Warning you will loose all already stored passwords)");
-                        String masterPw = Console.ReadLine();
+                        string masterPw;
+                        string confirmPw;
+                        do
+                        {
+                            Console.WriteLine("Enter new master password ! (Warning you will loose all already stored passwords)");
+                            masterPw = Console.ReadLine();
+                            Console.WriteLine("Please confirm master password ! ");
+                            confirmPw = Console.ReadLine();
+                            if (masterPw != confirmPw)
+                            {
+                                Console.WriteLine("Passwords do not match! Try again! ");
+                            }
+                        } while (masterPw != confirmPw);
+
                         masterRepository.SetMasterPasswordPlain(masterPw);
                         // urgent hotfix delete old passwords after changing the master
                         if (Directory.Exists("./passwords.pw"))
