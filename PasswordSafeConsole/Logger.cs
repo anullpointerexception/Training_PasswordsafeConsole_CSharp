@@ -1,5 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using Serilog;
+using System;
 namespace PasswordSafeConsole
 {
 
@@ -13,18 +13,40 @@ namespace PasswordSafeConsole
         }
         public static void WriteLog(string message, Type type)
         {
-            Console.WriteLine($"[{type}] : {message}");
 
-            string logPath = "/logs";
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
 
-            // Preparation for logging into files
-            using (StreamWriter write = new StreamWriter(logPath, true))
+            //Console.WriteLine($"[{type}] : {message}");
+
+            switch (type)
             {
-                write.WriteLine(message);
+                case Type.INFO:
+                    Log.Information(message);
+                    break;
+                case Type.ERROR:
+                    Log.Error(message);
+                    break;
+                case Type.DEBUG:
+                    Log.Debug(message);
+                    break;
+                default:
+                    Console.WriteLine("Unknown Log");
+                    break;
+
             }
 
+            // string logPath = "/logs";
+
+            // Preparation for logging into files
+            /* using (StreamWriter write = new StreamWriter(logPath, true))
+            {
+                write.WriteLine(message);
+            */
         }
 
-
     }
+
+
 }

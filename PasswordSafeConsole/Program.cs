@@ -155,6 +155,10 @@ namespace PasswordSafeConsole
                                     // Console.WriteLine("Passwords do not match! Try again! ");
                                     Logger.WriteLog("Passwords do not match! Try again! ", Logger.Type.ERROR);
                                 }
+                                else
+                                {
+                                    Logger.WriteLog("Passwords updated", Logger.Type.INFO);
+                                }
                             } while (masterPw != confirmPw);
 
                             masterRepository.SetMasterPasswordPlain(masterPw);
