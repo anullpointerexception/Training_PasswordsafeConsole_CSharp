@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using static System.Net.WebRequestMethods;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace PasswordSafeConsole
 {
@@ -12,6 +15,8 @@ namespace PasswordSafeConsole
         public static void Main(String[] args)
         {
             Console.WriteLine("Welcome to Passwordsafe");
+
+            ILoggerFactory iLoggerFactory = null;
 
             bool abort = false;
             bool unlocked = false;
@@ -42,18 +47,21 @@ namespace PasswordSafeConsole
                                 {
                                     passwordSafeEngine = new PasswordSafeEngine("./passwords.pw", new CipherFacility(masterPw));
                                     // Console.WriteLine("unlocked");
-                                    Logger.WriteLog("unlocked", Logger.Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory.LogInformation("unlocked");
 
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.WriteLog(ex.ToString(), Logger.Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory.LogInformation(ex.ToString());
                                 }
                             }
                             else
                             {
                                 // Console.WriteLine("master password did not match ! Failed to unlock.");
-                                Logger.WriteLog("master password did not match ! Failed to unlock.", Logger.Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory.LogInformation("master password did not match! Failed to unlock.");
                             }
                             break;
                         }
@@ -67,12 +75,14 @@ namespace PasswordSafeConsole
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.WriteLog(ex.ToString(), Logger.Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory.LogInformation(ex.ToString());
                                 }
                             }
                             else
                             {
-                                Logger.WriteLog("Please unlock first by entering the master password.", Logger.Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory.LogInformation("Please unlock first by entering the master password."); 
                             }
                             break;
                         }
@@ -86,7 +96,8 @@ namespace PasswordSafeConsole
                             }
                             else
                             {
-                                Logger.WriteLog("Please unlock first by entering the master password.", Logger.Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory.LogInformation("Please unlock first by entering the master password.");
                             }
                             break;
                         }
@@ -101,16 +112,20 @@ namespace PasswordSafeConsole
                                 try
                                 {
                                     passwordSafeEngine.AddNewPassword(new PasswordInfo(password, passwordName));
-                                    Logger.WriteLog("New Password added", Logger.Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory.LogInformation("New password added");
+                                    
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.WriteLog(ex.ToString(), Logger.Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory.LogInformation(ex.ToString());
                                 }
                             }
                             else
                             {
-                                Logger.WriteLog("Please unlock first by entering the master password.", Logger.Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory.LogInformation("Please unlock first by entering the master password.");
                             }
                             break;
                         }
@@ -123,12 +138,14 @@ namespace PasswordSafeConsole
                                 try
                                 {
                                     passwordSafeEngine.DeletePassword(passwordName);
-                                    Logger.WriteLog("Password removed", Logger.Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory.LogInformation("Password removed!");
 
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.WriteLog(ex.ToString(), Logger.Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory.LogInformation(ex.ToString());
 
                                 }
                             }
@@ -153,11 +170,13 @@ namespace PasswordSafeConsole
                                 if (masterPw != confirmPw)
                                 {
                                     // Console.WriteLine("Passwords do not match! Try again! ");
-                                    Logger.WriteLog("Passwords do not match! Try again! ", Logger.Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory.LogInformation("Passwords do not match! Try again! ");
                                 }
                                 else
                                 {
-                                    Logger.WriteLog("Passwords updated", Logger.Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory.LogInformation("Passwords updated");
                                 }
                             } while (masterPw != confirmPw);
 
@@ -168,12 +187,14 @@ namespace PasswordSafeConsole
                                 try
                                 {
                                     Directory.Delete("./passwords.pw", true);
-                                    Logger.WriteLog("successfully deleted", Logger.Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory.LogInformation("Successfully deleted!");
 
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.WriteLog(ex.ToString(), Logger.Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory.LogInformation(ex.ToString());
                                 }
 
                             }
@@ -181,7 +202,8 @@ namespace PasswordSafeConsole
                         }
                     default:
                         {
-                            Logger.WriteLog("Invalid input", Logger.Type.ERROR);
+                            iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                            iLoggerFactory.LogInformation("Invalid input");
                             break;
                         }
 
