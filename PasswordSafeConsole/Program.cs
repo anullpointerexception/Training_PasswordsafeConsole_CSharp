@@ -47,20 +47,20 @@ namespace PasswordSafeConsole
                                 {
                                     passwordSafeEngine = new PasswordSafeEngine("./passwords.pw", new CipherFacility(masterPw));
                                     // Console.WriteLine("unlocked");
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Info);
                                     iLoggerFactory.LogInformation("unlocked");
 
                                 }
                                 catch (Exception ex)
                                 {
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                     iLoggerFactory.LogInformation(ex.ToString());
                                 }
                             }
                             else
                             {
                                 // Console.WriteLine("master password did not match ! Failed to unlock.");
-                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                 iLoggerFactory.LogInformation("master password did not match! Failed to unlock.");
                             }
                             break;
@@ -75,13 +75,13 @@ namespace PasswordSafeConsole
                                 }
                                 catch (Exception ex)
                                 {
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                     iLoggerFactory.LogInformation(ex.ToString());
                                 }
                             }
                             else
                             {
-                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                 iLoggerFactory.LogInformation("Please unlock first by entering the master password."); 
                             }
                             break;
@@ -96,7 +96,7 @@ namespace PasswordSafeConsole
                             }
                             else
                             {
-                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                 iLoggerFactory.LogInformation("Please unlock first by entering the master password.");
                             }
                             break;
@@ -112,19 +112,19 @@ namespace PasswordSafeConsole
                                 try
                                 {
                                     passwordSafeEngine.AddNewPassword(new PasswordInfo(password, passwordName));
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Info);
                                     iLoggerFactory.LogInformation("New password added");
                                     
                                 }
                                 catch (Exception ex)
                                 {
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                     iLoggerFactory.LogInformation(ex.ToString());
                                 }
                             }
                             else
                             {
-                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                 iLoggerFactory.LogInformation("Please unlock first by entering the master password.");
                             }
                             break;
@@ -138,13 +138,13 @@ namespace PasswordSafeConsole
                                 try
                                 {
                                     passwordSafeEngine.DeletePassword(passwordName);
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Info);
                                     iLoggerFactory.LogInformation("Password removed!");
 
                                 }
                                 catch (Exception ex)
                                 {
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                     iLoggerFactory.LogInformation(ex.ToString());
 
                                 }
@@ -170,12 +170,12 @@ namespace PasswordSafeConsole
                                 if (masterPw != confirmPw)
                                 {
                                     // Console.WriteLine("Passwords do not match! Try again! ");
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                     iLoggerFactory.LogInformation("Passwords do not match! Try again! ");
                                 }
                                 else
                                 {
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Info);
                                     iLoggerFactory.LogInformation("Passwords updated");
                                 }
                             } while (masterPw != confirmPw);
@@ -187,22 +187,23 @@ namespace PasswordSafeConsole
                                 try
                                 {
                                     Directory.Delete("./passwords.pw", true);
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.INFO);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Info);
                                     iLoggerFactory.LogInformation("Successfully deleted!");
 
                                 }
                                 catch (Exception ex)
                                 {
-                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                                    iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                                     iLoggerFactory.LogInformation(ex.ToString());
                                 }
 
                             }
                             break;
+
                         }
                     default:
                         {
-                            iLoggerFactory = LoggerFactory.GetLoggerType(Type.ERROR);
+                            iLoggerFactory = LoggerFactory.GetLoggerType(Type.Error);
                             iLoggerFactory.LogInformation("Invalid input");
                             break;
                         }

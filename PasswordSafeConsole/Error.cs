@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace PasswordSafeConsole
     {
         public Type GetErrorType()
         {
-            return Type.ERROR;
+            return Type.Error;
         }
 
         public void LogInformation(string message)

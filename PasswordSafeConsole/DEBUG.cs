@@ -2,16 +2,17 @@
 
 namespace PasswordSafeConsole
 {
-    public class DEBUG : ILoggerFactory
+    public class Debug : ILoggerFactory
     {
         public Type GetErrorType()
         {
-            return Type.DEBUG;
+            return Type.Debug;
         }
 
         public void LogInformation(string message)
         {
             Log.Debug(message);
+
         }
     }
 }

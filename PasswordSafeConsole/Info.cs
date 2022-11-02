@@ -6,12 +6,12 @@ namespace PasswordSafeConsole
     {
         public Type GetErrorType()
         {
-            return Type.INFO;
+            return Type.Info;
         }
 
         public void LogInformation(string message)
         {
-            Log.Error(message);
+            Log.Information(message);
         }
     }
 }

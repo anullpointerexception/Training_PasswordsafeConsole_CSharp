@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace PasswordSafeConsole
 {
-    public enum Type
+    public enum Type // error types, there can be added new types later
     {
-        ERROR,
-        INFO,
-        DEBUG
+        Error,
+        Info,
+        Debug
     }
     public interface ILoggerFactory
     {
         Type GetErrorType();
 
         void LogInformation(string message);
-
-
     }
 }
